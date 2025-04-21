@@ -24,9 +24,9 @@ function MacOS() {
     <Html
       center
       transform
-      rotation={[1.49, 0.0125 / 2, 0]}
+      rotation={[1.52, 0.0125 / 2, 0]}
       scale={0.172}
-      position={[-0.04, 4, 0.15]}
+      position={[-0.04, 4, 0.13]}
     >
       {showIframe && (
         <iframe
@@ -35,7 +35,7 @@ function MacOS() {
             width: "1160px",
             height: "750px",
             border: "none",
-            borderRadius: "1rem",
+            borderRadius: ".75rem",
           }}
         />
       )}

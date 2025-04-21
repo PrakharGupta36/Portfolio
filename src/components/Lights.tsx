@@ -3,14 +3,15 @@ import { Fragment } from "react";
 export default function Lights() {
   return (
     <Fragment>
+      <ambientLight intensity={Math.PI / 2} />
       <spotLight
-        position={[2, 5, 2]}
-        angle={0.3}
-        penumbra={0.5}
-        intensity={1}
-        castShadow
+        position={[10, 10, 10]}
+        angle={0.15}
+        penumbra={1}
+        decay={0}
+        intensity={Math.PI}
       />
-      <ambientLight intensity={0.2} />
+      <pointLight position={[-1, -1, -1]} decay={0} intensity={Math.PI} />
     </Fragment>
   );
 }

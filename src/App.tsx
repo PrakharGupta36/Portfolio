@@ -1,4 +1,4 @@
-import { Environment, Loader, PerspectiveCamera } from "@react-three/drei";
+import { Loader, PerspectiveCamera } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Fragment, Suspense, useRef } from "react";
 import * as THREE from "three";
@@ -49,7 +49,7 @@ function Ambience() {
   return (
     <Fragment>
       <PostProcesssing />
-      <Environment preset='apartment' />
+
       <Lights />
     </Fragment>
   );
@@ -73,6 +73,7 @@ export default function App() {
   return (
     <Fragment>
       <Canvas
+        style={{ backgroundColor: "whitesmoke" }}
         shadows
         onClick={() => {
           setLaptopClicked(!laptopClicked);
