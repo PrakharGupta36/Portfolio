@@ -22,20 +22,23 @@ function MacOS() {
 
   return (
     <Html
+      occlude
       center
       transform
-      rotation={[1.52, 0.0125 / 2, 0]}
-      scale={0.172}
-      position={[-0.04, 4, 0.13]}
+      rotation={[1.5, 0.0125 / 2, 0]}
+      scale={0.00512}
+      position={[0.0022, 0, 0.112]}
     >
       {showIframe && (
         <iframe
+          onPointerDown={(e) => e.stopPropagation()}
           src='https://prakhargupta-portfolio.vercel.app/'
           style={{
             width: "1160px",
-            height: "750px",
+            height: "740px",
             border: "none",
-            borderRadius: ".75rem",
+            transformOrigin: "top-left",
+            borderRadius: "1rem",
           }}
         />
       )}

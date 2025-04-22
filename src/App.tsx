@@ -1,4 +1,4 @@
-import { Loader, PerspectiveCamera } from "@react-three/drei";
+import { Environment, Loader, PerspectiveCamera } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Fragment, Suspense, useRef } from "react";
 import * as THREE from "three";
@@ -7,6 +7,22 @@ import Lights from "./components/Lights";
 import PostProcesssing from "./components/Post-Processing";
 import Macbook from "./components/Macbook";
 import Table from "./components/Table";
+
+import { Backdrop } from "@react-three/drei";
+
+function SceneBackdrop() {
+  return (
+    <Backdrop
+      receiveShadow={false}
+      floor={20}
+      segments={2}
+      scale={[500, 30, 20]}
+      position={[0, -1, -5]}
+    >
+      <meshStandardMaterial color='whitesmoke' />
+    </Backdrop>
+  );
+}
 
 function Camera() {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
@@ -49,7 +65,12 @@ function Ambience() {
   return (
     <Fragment>
       <PostProcesssing />
-
+      <Environment
+        preset='night'
+        backgroundIntensity={0.5}
+        environmentIntensity={0.2}
+      />
+      <SceneBackdrop />
       <Lights />
     </Fragment>
   );
@@ -74,9 +95,19 @@ export default function App() {
     <Fragment>
       <Canvas
         style={{ backgroundColor: "whitesmoke" }}
-        shadows
+        dpr={[0.8, 1]}
+        gl={{
+          antialias: false,
+          stencil: false,
+          depth: false,
+          powerPreference: "high-performance",
+        }}
         onClick={() => {
           setLaptopClicked(!laptopClicked);
+        }}
+        onCreated={({ gl }) => {
+          gl.toneMapping = THREE.AgXToneMapping;
+          gl.setClearColor(0xfdfdfd, 0);
         }}
       >
         <Suspense fallback={null}>
