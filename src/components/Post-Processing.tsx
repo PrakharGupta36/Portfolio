@@ -2,6 +2,7 @@ import {
   Bloom,
   DepthOfField,
   EffectComposer,
+  FXAA,
   Noise,
   Vignette,
 } from "@react-three/postprocessing";
@@ -10,7 +11,8 @@ import { BlendFunction } from "postprocessing";
 export default function PostProcesssing() {
   return (
     <EffectComposer multisampling={0}>
-      {/* Subtle DOF - slight blur for realism */}
+      <FXAA />
+
       <DepthOfField
         focusDistance={0}
         focalLength={0.015}
@@ -18,24 +20,21 @@ export default function PostProcesssing() {
         height={480}
       />
 
-      {/* Soft bloom */}
       <Bloom
         blendFunction={BlendFunction.ADD}
-        intensity={0.2}
+        intensity={0.1}
         luminanceThreshold={0.3}
         luminanceSmoothing={0.6}
         height={300}
       />
 
-      {/* Very subtle film grain */}
-      <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.005} />
+      <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.05} />
 
-      {/* Natural vignette */}
       <Vignette
         blendFunction={BlendFunction.NORMAL}
         eskil={false}
-        offset={0.2}
-        darkness={0.6}
+        offset={0.5}
+        darkness={0.55}
       />
     </EffectComposer>
   );

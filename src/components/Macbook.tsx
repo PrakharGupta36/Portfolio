@@ -25,9 +25,9 @@ function MacOS() {
       occlude
       center
       transform
-      rotation={[1.5, 0.0125 / 2, 0]}
+      rotation={[1.49, 0.0125 / 2, 0]}
       scale={0.00512}
-      position={[0.0022, 0, 0.112]}
+      position={[0.0024, 0, 0.112]}
     >
       {showIframe && (
         <iframe
@@ -38,7 +38,7 @@ function MacOS() {
             height: "740px",
             border: "none",
             transformOrigin: "top-left",
-            borderRadius: "1rem",
+            borderRadius: ".5rem",
           }}
         />
       )}

@@ -15,11 +15,11 @@ function SceneBackdrop() {
     <Backdrop
       receiveShadow={false}
       floor={20}
-      segments={2}
+      segments={10}
       scale={[500, 30, 20]}
       position={[0, -1, -5]}
     >
-      <meshStandardMaterial color='whitesmoke' />
+      <meshStandardMaterial color='#dfdfdf' />
     </Backdrop>
   );
 }
@@ -32,15 +32,20 @@ function Camera() {
   useFrame(({ pointer }) => {
     if (!cameraRef.current) return;
 
+    const cam = cameraRef.current;
     const targetPos = laptopClicked
-      ? new THREE.Vector3(0, 4.1, 1.1) // Laptop camera;
-      : new THREE.Vector3(0, 3, 11); // Default camera;
+      ? new THREE.Vector3(0, 4.1, 1.1)
+      : new THREE.Vector3(0, 3, 11);
 
-    cameraRef.current.position.lerp(targetPos, 0.05);
+    cam.position.lerp(targetPos, 0.05);
 
-    if (!laptopClicked) {
-      cameraRef.current.rotation.y = THREE.MathUtils.lerp(
-        cameraRef.current.rotation.y,
+    if (laptopClicked) {
+      // Smoothly look at origin (0, 0, 0)
+      const lookAtTarget = new THREE.Vector3(0.0, 3.9, -20); // adjust Y if laptop is higher/lower
+      cam.lookAt(lookAtTarget);
+    } else {
+      cam.rotation.y = THREE.MathUtils.lerp(
+        cam.rotation.y,
         lastPointerRotation.current || -pointer.x / 2.75,
         0.05
       );
@@ -95,19 +100,19 @@ export default function App() {
     <Fragment>
       <Canvas
         style={{ backgroundColor: "whitesmoke" }}
-        dpr={[0.8, 1]}
+        dpr={1.1}
         gl={{
           antialias: false,
           stencil: false,
           depth: false,
           powerPreference: "high-performance",
         }}
-        onClick={() => {
-          setLaptopClicked(!laptopClicked);
-        }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.AgXToneMapping;
-          gl.setClearColor(0xfdfdfd, 0);
+          gl.setClearColor(0xfdfdfd, 1);
+        }}
+        onClick={() => {
+          setLaptopClicked(!laptopClicked);
         }}
       >
         <Suspense fallback={null}>
