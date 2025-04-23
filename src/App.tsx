@@ -1,4 +1,9 @@
-import { Environment, Loader, PerspectiveCamera } from "@react-three/drei";
+import {
+  Environment,
+  Loader,
+  PerspectiveCamera,
+  Text,
+} from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Fragment, Suspense, useRef } from "react";
 import * as THREE from "three";
@@ -34,7 +39,7 @@ function Camera() {
 
     const cam = cameraRef.current;
     const targetPos = laptopClicked
-      ? new THREE.Vector3(0, 4.1, 1.1)
+      ? new THREE.Vector3(0, 4.05, 1.1)
       : new THREE.Vector3(0, 3, 11);
 
     cam.position.lerp(targetPos, 0.05);
@@ -67,14 +72,47 @@ function Camera() {
 }
 
 function Ambience() {
+  const ref = useRef<THREE.Mesh>(null);
+  const { laptopClicked } = useGlobal();
+
+  useFrame((state) => {
+    const mesh = ref.current;
+    if (!mesh) return;
+
+    const t = state.clock.getElapsedTime();
+    mesh.position.y = 5 + Math.sin(t * 2) * 0.1;
+
+    const mat = mesh.material as THREE.Material;
+    if ("opacity" in mat && "transparent" in mat) {
+      mat.transparent = true;
+      mat.opacity = THREE.MathUtils.lerp(
+        mat.opacity,
+        laptopClicked ? 0 : 1,
+        0.1
+      );
+    }
+  });
+
   return (
     <Fragment>
       <PostProcesssing />
-      <Environment
-        preset='night'
-        backgroundIntensity={0.5}
-        environmentIntensity={0.2}
-      />
+      <Text
+        visible={!laptopClicked}
+        font='/font.woff'
+        ref={ref}
+        fontSize={0.75}
+        position={[0, 5, -5]}
+        color='black'
+        anchorX='center'
+        anchorY='middle'
+        fillOpacity={1}
+        outlineColor='white'
+        outlineWidth={0.015}
+        material-transparent
+      >
+        Click anywhere to begin
+      </Text>
+      <Environment preset='night' />
       <SceneBackdrop />
       <Lights />
     </Fragment>

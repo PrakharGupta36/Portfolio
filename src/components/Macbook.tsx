@@ -7,7 +7,7 @@ Title: Macbook Pro 13 inch 2020
 */
 
 import { Fragment, JSX, useEffect, useRef, useState } from "react";
-import { Html, useGLTF } from "@react-three/drei";
+import { Html, Text, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import useGlobal from "../Global-State";
 import { useFrame } from "@react-three/fiber";
@@ -16,33 +16,35 @@ function MacOS() {
   const [showIframe, setShowIframe] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowIframe(true), 2500);
+    const timer = setTimeout(() => setShowIframe(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <Html
-      occlude
-      center
-      transform
-      rotation={[1.49, 0.0125 / 2, 0]}
-      scale={0.00512}
-      position={[0.0024, 0, 0.112]}
-    >
-      {showIframe && (
-        <iframe
-          onPointerDown={(e) => e.stopPropagation()}
-          src='https://prakhargupta-portfolio.vercel.app/'
-          style={{
-            width: "1160px",
-            height: "740px",
-            border: "none",
-            transformOrigin: "top-left",
-            borderRadius: ".5rem",
-          }}
-        />
-      )}
-    </Html>
+    <Fragment>
+      <Html
+        transform
+        center
+        rotation={[1.5755, 0, 0]}
+        scale={0.049}
+        position={[0.000, 0.35, 0.415]}
+      >
+        {showIframe && (
+          <iframe
+            onPointerDown={(e) => e.stopPropagation()}
+            src='https://prakhargupta-portfolio.vercel.app'
+            style={{
+              width: "1200px",
+              opacity: 0.85,
+              height: "770px",
+              border: "none",
+              transformOrigin: "top-left",
+              borderRadius: ".5rem",
+            }}
+          />
+        )}
+      </Html>
+    </Fragment>
   );
 }
 
@@ -97,21 +99,22 @@ export default function Macbook(props: JSX.IntrinsicElements["group"]) {
         ref={group}
         {...props}
         dispose={null}
-        scale={10}
+        scale={9.5}
         position={[-0.1, 3, -0.1]}
-        rotation={[0, 0.57, 0]}
+        rotation={[0, 0.575, 0]}
       >
         <group name='Sketchfab_Scene'>
           <group name='Sketchfab_model' rotation={[-Math.PI / 2, 0, 0]}>
             <group name='root'>
-              {laptopClicked && <MacOS />}
               <group name='GLTF_SceneRootNode' rotation={[Math.PI / 2, 0, 0]}>
                 <group
                   ref={screenRef}
                   name='Bevels_2'
+                  rotation={[0, 0, 0]}
                   position={[0, 0.008, -0.104]}
                   scale={0.275}
                 >
+                  {laptopClicked && <MacOS />}
                   <mesh
                     name='Object_4'
                     castShadow
@@ -132,7 +135,19 @@ export default function Macbook(props: JSX.IntrinsicElements["group"]) {
                     receiveShadow
                     geometry={nodes.Object_6.geometry}
                     material={materials.Glass}
-                  />
+                  >
+                    <Text
+                      font=''
+                      color='white'
+                      scale={0.015}
+                      position={[0, 0, 0.025]}
+                      rotation={[1.6, 0, 0]}
+                      anchorX='center'
+                      anchorY='middle'
+                    >
+                      MacBook Air
+                    </Text>
+                  </mesh>
 
                   <mesh
                     name='Object_8'
