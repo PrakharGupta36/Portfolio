@@ -1,9 +1,4 @@
-import {
-  Environment,
-  Loader,
-  PerspectiveCamera,
-  Text,
-} from "@react-three/drei";
+import { Environment, PerspectiveCamera, Text } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Fragment, Suspense, useRef } from "react";
 import * as THREE from "three";
@@ -14,6 +9,7 @@ import Macbook from "./components/Macbook";
 import Table from "./components/Table";
 
 import { Backdrop } from "@react-three/drei";
+import CustomLoader from "./utils/Custom-Loader";
 
 function SceneBackdrop() {
   return (
@@ -153,12 +149,11 @@ export default function App() {
           setLaptopClicked(!laptopClicked);
         }}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={<CustomLoader />}>
           <Camera />
           <Experience />
         </Suspense>
       </Canvas>
-      <Loader />
     </Fragment>
   );
 }

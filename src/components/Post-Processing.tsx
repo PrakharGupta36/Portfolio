@@ -34,7 +34,7 @@ export default function PostProcesssing() {
         blendFunction={BlendFunction.NORMAL}
         eskil={false}
         offset={0.5}
-        darkness={0.55}
+        darkness={0.58}
       />
     </EffectComposer>
   );
